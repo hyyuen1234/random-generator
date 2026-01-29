@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,30 +7,47 @@
   <meta name="description" content="Free random name picker and wheel spinner. Paste a list, shuffle, spin the wheel, and pick winners instantly." />
   <style>
     :root{
-      --bg:#0b1220;
-      --panel:#121b2f;
-      --panel2:#0f172a;
-      --text:#e7eefc;
-      --muted:#a9b7d4;
-      --line:rgba(255,255,255,.10);
-      --brand:#60a5fa;
-      --brand2:#22c55e;
-      --danger:#ef4444;
+      /* theme tokens (default set is light; dark overrides below) */
+      --bg: #f6f8ff;
+      --bg2: #ffffff;
+      --panel: rgba(255,255,255,.75);
+      --panelSolid: #ffffff;
+      --text: #0b1220;
+      --muted: #4b5563;
+      --line: rgba(2,6,23,.12);
+      --brand:#2563eb;
+      --brand2:#16a34a;
+      --danger:#dc2626;
       --warn:#f59e0b;
-      --shadow: 0 18px 45px rgba(0,0,0,.35);
+      --shadow: 0 18px 45px rgba(2,6,23,.12);
       --radius: 16px;
       --radius2: 12px;
       --max: 1100px;
-      color-scheme: dark;
+      color-scheme: light;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
+
+    /* Dark theme overrides */
+    html[data-theme="dark"]{
+      --bg:#0b1220;
+      --bg2:#0b1220;
+      --panel:#121b2f;
+      --panelSolid:#0f172a;
+      --text:#e7eefc;
+      --muted:#a9b7d4;
+      --line:rgba(255,255,255,.10);
+      --shadow: 0 18px 45px rgba(0,0,0,.35);
+      color-scheme: dark;
+    }
+
     * { box-sizing: border-box; }
     body{
       margin:0;
-      background: radial-gradient(1000px 500px at 20% 10%, rgba(96,165,250,.18), transparent 60%),
-                  radial-gradient(900px 600px at 80% 0%, rgba(34,197,94,.14), transparent 55%),
-                  radial-gradient(900px 600px at 50% 100%, rgba(245,158,11,.10), transparent 55%),
-                  var(--bg);
+      background:
+        radial-gradient(1000px 500px at 20% 10%, rgba(37,99,235,.14), transparent 60%),
+        radial-gradient(900px 600px at 80% 0%, rgba(22,163,74,.10), transparent 55%),
+        radial-gradient(900px 600px at 50% 100%, rgba(245,158,11,.10), transparent 55%),
+        var(--bg);
       color: var(--text);
     }
     a{ color: var(--brand); text-decoration: none; }
@@ -40,7 +57,7 @@
       position: sticky;
       top: 0;
       z-index: 10;
-      background: rgba(11,18,32,.75);
+      background: color-mix(in srgb, var(--bg2) 78%, transparent);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--line);
     }
@@ -63,8 +80,8 @@
       width: 36px;
       height: 36px;
       border-radius: 10px;
-      background: conic-gradient(from 180deg, #60a5fa, #22c55e, #f59e0b, #ef4444, #60a5fa);
-      box-shadow: 0 10px 25px rgba(0,0,0,.35);
+      background: conic-gradient(from 180deg, #2563eb, #16a34a, #f59e0b, #dc2626, #2563eb);
+      box-shadow: 0 10px 25px rgba(0,0,0,.18);
     }
     .brand h1{
       font-size: 14px;
@@ -84,9 +101,10 @@
       flex-wrap: wrap;
       justify-content: flex-end;
     }
+
     .btn{
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.03);
+      background: color-mix(in srgb, var(--panelSolid) 72%, transparent);
       color: var(--text);
       padding: 9px 12px;
       border-radius: 12px;
@@ -99,21 +117,22 @@
       transition: transform .06s ease, background .15s ease, border-color .15s ease;
       user-select: none;
     }
-    .btn:hover{ background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.18); }
+    .btn:hover{ background: color-mix(in srgb, var(--panelSolid) 88%, transparent); border-color: color-mix(in srgb, var(--line) 70%, var(--text) 10%); }
     .btn:active{ transform: translateY(1px); }
     .btn.primary{
-      background: linear-gradient(180deg, rgba(96,165,250,.22), rgba(96,165,250,.10));
-      border-color: rgba(96,165,250,.35);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--brand) 18%, transparent), color-mix(in srgb, var(--brand) 8%, transparent));
+      border-color: color-mix(in srgb, var(--brand) 35%, var(--line));
     }
     .btn.good{
-      background: linear-gradient(180deg, rgba(34,197,94,.22), rgba(34,197,94,.10));
-      border-color: rgba(34,197,94,.35);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--brand2) 18%, transparent), color-mix(in srgb, var(--brand2) 8%, transparent));
+      border-color: color-mix(in srgb, var(--brand2) 35%, var(--line));
     }
     .btn.danger{
-      background: linear-gradient(180deg, rgba(239,68,68,.18), rgba(239,68,68,.08));
-      border-color: rgba(239,68,68,.35);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--danger) 14%, transparent), color-mix(in srgb, var(--danger) 6%, transparent));
+      border-color: color-mix(in srgb, var(--danger) 35%, var(--line));
     }
     .btn.small{ padding: 8px 10px; border-radius: 10px; }
+    .btn:disabled{ opacity: .6; cursor: not-allowed; }
 
     main{
       max-width: var(--max);
@@ -130,24 +149,20 @@
     }
 
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      background: color-mix(in srgb, var(--panelSolid) 72%, transparent);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow: hidden;
     }
-    .card h2{
-      margin:0;
-      font-size: 14px;
-      letter-spacing: .2px;
-    }
+    .card h2{ margin:0; font-size: 14px; letter-spacing: .2px; }
     .card .hd{
       padding: 14px 14px;
       display:flex;
       align-items:center;
       justify-content: space-between;
       border-bottom: 1px solid var(--line);
-      background: rgba(0,0,0,.12);
+      background: color-mix(in srgb, var(--panelSolid) 80%, transparent);
     }
     .card .bd{ padding: 14px; }
     .muted{ color: var(--muted); font-size: 12px; line-height: 1.4; }
@@ -160,14 +175,14 @@
       padding: 12px;
       border-radius: 12px;
       border: 1px solid var(--line);
-      background: rgba(0,0,0,.20);
+      background: color-mix(in srgb, var(--panelSolid) 84%, transparent);
       color: var(--text);
       outline: none;
       resize: vertical;
       font-size: 13px;
       line-height: 1.35;
     }
-    textarea:focus{ border-color: rgba(96,165,250,.5); }
+    textarea:focus{ border-color: color-mix(in srgb, var(--brand) 55%, var(--line)); }
 
     .pill{
       display:inline-flex;
@@ -176,11 +191,11 @@
       padding: 6px 10px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: rgba(0,0,0,.18);
+      background: color-mix(in srgb, var(--panelSolid) 80%, transparent);
       font-size: 12px;
       color: var(--muted);
     }
-    .pill strong{ color: var(--text); font-weight: 600; }
+    .pill strong{ color: var(--text); font-weight: 700; }
 
     .wheelWrap{
       display:grid;
@@ -194,26 +209,35 @@
       max-width: 520px;
       max-height: 520px;
       border-radius: 999px;
-      background: rgba(255,255,255,.02);
-      box-shadow: 0 25px 70px rgba(0,0,0,.45);
+      background: color-mix(in srgb, var(--panelSolid) 88%, transparent);
+      box-shadow: 0 25px 70px rgba(0,0,0,.20);
     }
+    html[data-theme="dark"] canvas{
+      box-shadow: 0 25px 70px rgba(0,0,0,.45);
+      background: rgba(255,255,255,.02);
+    }
+
     .pointer{
       width:0; height:0;
       border-left: 14px solid transparent;
       border-right: 14px solid transparent;
-      border-top: 24px solid rgba(231,238,252,.95);
-      filter: drop-shadow(0 10px 12px rgba(0,0,0,.5));
+      border-top: 24px solid color-mix(in srgb, var(--text) 90%, transparent);
+      filter: drop-shadow(0 10px 12px rgba(0,0,0,.25));
       margin-bottom: -8px;
     }
 
     .result{
       padding: 12px;
       border-radius: 14px;
-      border: 1px dashed rgba(255,255,255,.18);
+      border: 1px dashed color-mix(in srgb, var(--line) 70%, transparent);
+      background: color-mix(in srgb, var(--panelSolid) 86%, transparent);
+    }
+    html[data-theme="dark"] .result{
       background: rgba(0,0,0,.22);
+      border: 1px dashed rgba(255,255,255,.18);
     }
     .result .label{ font-size: 12px; color: var(--muted); }
-    .result .value{ font-size: 18px; font-weight: 700; margin-top: 4px; word-break: break-word; }
+    .result .value{ font-size: 18px; font-weight: 800; margin-top: 4px; word-break: break-word; }
 
     .grid2{
       display:grid;
@@ -249,16 +273,17 @@
     }
     .links{ display:flex; gap:12px; flex-wrap: wrap; margin-top: 8px; }
 
-    /* simple modal */
+    /* modal */
     dialog{
       border: 1px solid var(--line);
       border-radius: 16px;
-      background: #0b1220;
+      background: var(--panelSolid);
       color: var(--text);
       width: min(720px, 92vw);
       box-shadow: var(--shadow);
     }
-    dialog::backdrop{ background: rgba(0,0,0,.6); }
+    html[data-theme="dark"] dialog{ background: #0b1220; }
+    dialog::backdrop{ background: rgba(0,0,0,.55); }
     .modalHd{ display:flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px; border-bottom: 1px solid var(--line); }
     .modalBd{ padding: 14px; }
     .field{
@@ -266,14 +291,22 @@
       padding: 10px 12px;
       border-radius: 12px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.04);
+      background: color-mix(in srgb, var(--panelSolid) 88%, transparent);
       color: var(--text);
       outline:none;
       font-size: 13px;
     }
-    .field:focus{ border-color: rgba(96,165,250,.5); }
+    .field:focus{ border-color: color-mix(in srgb, var(--brand) 55%, var(--line)); }
     .hint{ font-size: 12px; color: var(--muted); margin-top: 8px; }
-    code.k{ background: rgba(255,255,255,.06); padding: 2px 6px; border-radius: 8px; border:1px solid var(--line); }
+    code.k{ background: color-mix(in srgb, var(--panelSolid) 88%, transparent); padding: 2px 6px; border-radius: 8px; border:1px solid var(--line); }
+
+    .winnerActions{
+      display:flex;
+      gap:10px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
   </style>
 </head>
 <body>
@@ -287,6 +320,7 @@
       </div>
     </div>
     <nav>
+      <button class="btn small" id="btnTheme" title="Toggle light/dark">Theme</button>
       <button class="btn small" id="btnNew" title="Clear everything">New</button>
       <button class="btn small" id="btnShuffle" title="Shuffle entries">Shuffle</button>
       <button class="btn small" id="btnSort" title="Sort A→Z">Sort</button>
@@ -328,9 +362,9 @@
     <div class="hd">
       <h2>Entries</h2>
       <div class="row">
-        <label class="chk" title="Remove the selected winner from the list after each spin/pick">
+        <label class="chk" title="Auto-remove winner after each spin/pick (you asked for a popup, so this is OFF by default)">
           <input type="checkbox" id="removeWinner" />
-          Remove winner
+          Auto remove winner
         </label>
       </div>
     </div>
@@ -351,7 +385,7 @@
       <hr style="border:none;border-top:1px solid var(--line); margin:14px 0;" />
 
       <div class="muted">
-        <strong>Free + beginner friendly:</strong> This site runs entirely in your browser (no account). If you want “shareable links” that always load the same list for everyone, you usually add a backend later. For now, this page can share lists via the URL for convenience.
+        <strong>Note:</strong> After spinning, a popup will ask if you want to remove the winner.
       </div>
     </div>
   </aside>
@@ -360,7 +394,7 @@
 <footer>
   <div>
     <strong>About</strong><br/>
-    This is a free random picker tool. For best results, add useful pages (classroom picker, raffle picker, team standup picker) and submit your site to Google Search Console.
+    This is a free random picker tool.
   </div>
   <div class="links">
     <a href="#" id="openPrivacy">Privacy</a>
@@ -374,7 +408,7 @@
 
 <dialog id="modal">
   <div class="modalHd">
-    <div style="font-weight:700" id="modalTitle">Info</div>
+    <div style="font-weight:800" id="modalTitle">Info</div>
     <button class="btn small" id="modalClose">Close</button>
   </div>
   <div class="modalBd" id="modalBody"></div>
@@ -399,6 +433,7 @@
   };
 
   const btn = {
+    theme: document.getElementById('btnTheme'),
     new: document.getElementById('btnNew'),
     shuffle: document.getElementById('btnShuffle'),
     sort: document.getElementById('btnSort'),
@@ -411,25 +446,43 @@
     clear: document.getElementById('btnClear'),
   };
 
+  // --- Theme (default: light) ---
+  const THEME_KEY = 'rng_theme_v1';
+  function setTheme(next){
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem(THEME_KEY, next);
+    btn.theme.textContent = next === 'dark' ? 'Dark' : 'Light';
+  }
+  function initTheme(){
+    const saved = localStorage.getItem(THEME_KEY);
+    if(saved === 'dark' || saved === 'light'){
+      setTheme(saved);
+    } else {
+      setTheme('light'); // your request: default bright/white
+    }
+  }
+  btn.theme.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    setTheme(current === 'dark' ? 'light' : 'dark');
+    draw();
+  });
+
   // Footer links
   document.getElementById('openPrivacy').addEventListener('click', (e) => {
     e.preventDefault();
     openModal('Privacy', `
       <p>This tool runs entirely in your browser. By default, it stores your entries only on your device (if you click Save).</p>
-      <p>If you add ads/analytics later, you must update this page to explain what data is collected.</p>
     `);
   });
   document.getElementById('openTerms').addEventListener('click', (e) => {
     e.preventDefault();
     openModal('Terms', `
-      <p>Use at your own risk. No guarantees about suitability for raffles, gambling, or regulated drawings.</p>
-      <p>If you plan to use this for giveaways, check your local laws and platform rules.</p>
+      <p>Use at your own risk.</p>
     `);
   });
   document.getElementById('openContact').addEventListener('click', (e) => {
     e.preventDefault();
     openModal('Contact', `
-      <p>Add your contact email here (recommended for AdSense approval).</p>
       <p><strong>Email:</strong> you@example.com</p>
     `);
   });
@@ -446,7 +499,7 @@
   const ctx = els.canvas.getContext('2d');
   const state = {
     entries: [],
-    rotation: 0,          // radians
+    rotation: 0,
     spinning: false,
     lastWinner: null,
   };
@@ -454,15 +507,11 @@
   const COLORS = ['#2563eb', '#16a34a', '#f59e0b', '#dc2626', '#7c3aed', '#0891b2'];
   const STORAGE_KEY = 'rng_site_v1';
 
-  // --- Helpers ---
   function normalizeLines(text){
-    return text
-      .split(/\r?\n/)
-      .map(s => s.trim())
-      .filter(Boolean);
+    return text.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
   }
   function setEntries(list){
-    state.entries = list.slice(0, 500); // simple limit to keep it fast
+    state.entries = list.slice(0, 500);
     els.count.textContent = state.entries.length;
     draw();
   }
@@ -476,13 +525,12 @@
   function encodeForHash(list){
     const json = JSON.stringify({v:1, e:list});
     const b64 = btoa(unescape(encodeURIComponent(json)));
-    return b64.replaceAll('=','').replaceAll('+','-').replaceAll('/','_'); // url-safe
+    return b64.replaceAll('=','').replaceAll('+','-').replaceAll('/','_');
   }
   function decodeFromHash(hash){
     const h = hash.replace(/^#/, '').trim();
     if(!h) return null;
     const b64 = h.replaceAll('-','+').replaceAll('_','/');
-    // pad
     const pad = b64.length % 4 ? '='.repeat(4 - (b64.length % 4)) : '';
     const json = decodeURIComponent(escape(atob(b64 + pad)));
     const obj = JSON.parse(json);
@@ -507,9 +555,7 @@
       els.removeWinner.checked = !!obj.removeWinner;
       els.savedState.textContent = 'Yes';
       return true;
-    }catch(e){
-      return false;
-    }
+    }catch(e){ return false; }
   }
 
   function clearResult(){
@@ -517,7 +563,10 @@
     state.lastWinner = null;
   }
 
-  // --- Wheel drawing ---
+  function isDark(){
+    return (document.documentElement.getAttribute('data-theme') || 'light') === 'dark';
+  }
+
   function draw(){
     const W = els.canvas.width;
     const H = els.canvas.height;
@@ -527,7 +576,6 @@
     const cx = W/2, cy = H/2;
     const r = Math.min(W,H)*0.46;
 
-    // Background disc
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(state.rotation);
@@ -535,23 +583,23 @@
     // rim shadow
     ctx.beginPath();
     ctx.arc(0,0,r+10,0,Math.PI*2);
-    ctx.fillStyle = 'rgba(0,0,0,.25)';
+    ctx.fillStyle = isDark() ? 'rgba(0,0,0,.25)' : 'rgba(2,6,23,.12)';
     ctx.fill();
 
     if(n === 0){
       ctx.beginPath();
       ctx.arc(0,0,r,0,Math.PI*2);
-      ctx.fillStyle = 'rgba(255,255,255,.04)';
+      ctx.fillStyle = isDark() ? 'rgba(255,255,255,.04)' : 'rgba(255,255,255,.85)';
       ctx.fill();
 
-      ctx.fillStyle = 'rgba(231,238,252,.85)';
-      ctx.font = '700 34px system-ui, -apple-system, Segoe UI, Roboto, Arial';
+      ctx.fillStyle = isDark() ? 'rgba(231,238,252,.90)' : 'rgba(2,6,23,.85)';
+      ctx.font = '800 34px system-ui, -apple-system, Segoe UI, Roboto, Arial';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText('Add entries →', 0, -10);
 
-      ctx.fillStyle = 'rgba(169,183,212,.9)';
-      ctx.font = '500 20px system-ui, -apple-system, Segoe UI, Roboto, Arial';
+      ctx.fillStyle = isDark() ? 'rgba(169,183,212,.95)' : 'rgba(75,85,99,.95)';
+      ctx.font = '600 20px system-ui, -apple-system, Segoe UI, Roboto, Arial';
       ctx.fillText('Then press Spin', 0, 30);
 
       ctx.restore();
@@ -571,12 +619,10 @@
       ctx.fillStyle = COLORS[i % COLORS.length];
       ctx.fill();
 
-      // separators
-      ctx.strokeStyle = 'rgba(255,255,255,.12)';
+      ctx.strokeStyle = isDark() ? 'rgba(255,255,255,.12)' : 'rgba(255,255,255,.35)';
       ctx.lineWidth = 4;
       ctx.stroke();
 
-      // label
       const label = state.entries[i];
       const mid = a0 + slice/2;
       ctx.save();
@@ -584,18 +630,16 @@
       ctx.translate(r*0.64, 0);
       ctx.rotate(Math.PI/2);
 
-      ctx.fillStyle = 'rgba(255,255,255,.92)';
+      ctx.fillStyle = 'rgba(255,255,255,.95)';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
 
-      // auto size a bit
-      const max = 22;
-      const min = 12;
+      const max = 22, min = 12;
       let fontSize = max;
-      ctx.font = `700 ${fontSize}px system-ui, -apple-system, Segoe UI, Roboto, Arial`;
+      ctx.font = `800 ${fontSize}px system-ui, -apple-system, Segoe UI, Roboto, Arial`;
       while(fontSize > min && ctx.measureText(label).width > r*0.70){
         fontSize -= 1;
-        ctx.font = `700 ${fontSize}px system-ui, -apple-system, Segoe UI, Roboto, Arial`;
+        ctx.font = `800 ${fontSize}px system-ui, -apple-system, Segoe UI, Roboto, Arial`;
       }
       ctx.fillText(label, 0, 0);
       ctx.restore();
@@ -606,28 +650,17 @@
   }
 
   function drawCenterCap(cx, cy, r){
-    // center cap
     ctx.save();
     ctx.translate(cx, cy);
     ctx.beginPath();
     ctx.arc(0,0,r*0.18,0,Math.PI*2);
-    ctx.fillStyle = 'rgba(255,255,255,.96)';
+    ctx.fillStyle = isDark() ? 'rgba(255,255,255,.96)' : 'rgba(255,255,255,.98)';
     ctx.fill();
 
     ctx.beginPath();
     ctx.arc(0,0,r*0.185,0,Math.PI*2);
-    ctx.strokeStyle = 'rgba(0,0,0,.18)';
+    ctx.strokeStyle = isDark() ? 'rgba(0,0,0,.18)' : 'rgba(2,6,23,.20)';
     ctx.lineWidth = 6;
-    ctx.stroke();
-    ctx.restore();
-
-    // pointer overlay (subtle)
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.beginPath();
-    ctx.arc(0,0,r+6, -Math.PI/2 - 0.02, -Math.PI/2 + 0.02);
-    ctx.strokeStyle = 'rgba(255,255,255,.25)';
-    ctx.lineWidth = 10;
     ctx.stroke();
     ctx.restore();
   }
@@ -636,34 +669,61 @@
     const n = state.entries.length;
     if(n === 0) return -1;
     const slice = (Math.PI*2)/n;
-    // Pointer at top (-PI/2). We rotated wheel by state.rotation.
-    // Convert pointer angle into wheel coordinates.
     const angle = (-Math.PI/2 - state.rotation) % (Math.PI*2);
     const a = (angle + Math.PI*2) % (Math.PI*2);
     return Math.floor(a / slice) % n;
   }
 
-  function pickWinner(){
-    const n = state.entries.length;
-    if(n === 0) return null;
-    const idx = currentIndex();
-    return { idx, value: state.entries[idx] };
-  }
-
   function removeAt(idx){
-    state.entries.splice(idx,1);
+    state.entries.splice(idx, 1);
     updateTextareaFromState();
     els.count.textContent = state.entries.length;
     draw();
   }
 
-  // --- Actions ---
+  // Popup after winner is selected
+  function promptRemoveWinner(value, idx){
+    const safe = String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+    openModal('Winner', `
+      <div class="muted">Selected:</div>
+      <div style="font-size:18px;font-weight:900;margin-top:6px;">${safe}</div>
+      <div class="winnerActions">
+        <button class="btn" id="winnerClose">Close</button>
+        <button class="btn danger" id="winnerRemove">Remove</button>
+      </div>
+      <div class="hint">Tip: “Remove” deletes it from the entries list.</div>
+    `);
+
+    // wire buttons inside modal
+    const closeBtn = document.getElementById('winnerClose');
+    const removeBtn = document.getElementById('winnerRemove');
+
+    closeBtn.addEventListener('click', () => els.modal.close(), { once:true });
+    removeBtn.addEventListener('click', () => {
+      // idx is from current entries at time of win
+      if(idx >= 0 && idx < state.entries.length && state.entries[idx] === value){
+        removeAt(idx);
+      } else {
+        // fallback: remove first matching value
+        const j = state.entries.indexOf(value);
+        if(j !== -1) removeAt(j);
+      }
+      els.modal.close();
+    }, { once:true });
+  }
+
   function spin(){
     if(state.spinning) return;
     if(state.entries.length < 2){
-      els.winner.textContent = state.entries.length ? state.entries[0] : '—';
+      if(state.entries.length){
+        els.winner.textContent = state.entries[0];
+        promptRemoveWinner(state.entries[0], 0);
+      } else {
+        els.winner.textContent = '—';
+      }
       return;
     }
+
     state.spinning = true;
     els.mode.textContent = 'Spinning…';
     btn.spin.disabled = true;
@@ -672,7 +732,7 @@
     const start = performance.now();
     const duration = 3200 + Math.random()*800;
     const startRot = state.rotation;
-    const extraTurns = (Math.random()*3 + 5) * Math.PI*2; // 5–8 turns
+    const extraTurns = (Math.random()*3 + 5) * Math.PI*2;
     const offset = Math.random() * Math.PI*2;
     const target = startRot + extraTurns + offset;
 
@@ -692,15 +752,18 @@
         btn.pick.disabled = false;
         els.mode.textContent = 'Wheel';
 
-        const w = pickWinner();
-        if(w){
-          state.lastWinner = w.value;
-          els.winner.textContent = w.value;
-          els.subwinner.textContent = `Selected item #${w.idx + 1} of ${state.entries.length}.`;
+        const idx = currentIndex();
+        if(idx >= 0){
+          const value = state.entries[idx];
+          state.lastWinner = value;
+          els.winner.textContent = value;
+          els.subwinner.textContent = `Selected item #${idx + 1} of ${state.entries.length}.`;
 
           if(els.removeWinner.checked){
-            removeAt(w.idx);
-            els.subwinner.textContent += ' (Removed)';
+            removeAt(idx);
+            els.subwinner.textContent += ' (Auto-removed)';
+          } else {
+            promptRemoveWinner(value, idx);
           }
         }
       }
@@ -714,23 +777,25 @@
       els.winner.textContent = '—';
       return;
     }
-    // pick random index without relying on wheel rotation
+
     const idx = randomInt(state.entries.length);
-    state.lastWinner = state.entries[idx];
-    els.winner.textContent = state.entries[idx];
+    const value = state.entries[idx];
+    state.lastWinner = value;
+    els.winner.textContent = value;
     els.subwinner.textContent = `Picked randomly (no spin). Item #${idx + 1} of ${state.entries.length}.`;
 
-    // rotate wheel so the picked entry lands at pointer (nice UX)
+    // rotate wheel so the picked entry lands at pointer
     const n = state.entries.length;
     const slice = (Math.PI*2)/n;
     const mid = (idx + 0.5) * slice;
-    // want -PI/2 to point to that mid => rotation = -PI/2 - mid
     state.rotation = -Math.PI/2 - mid;
     draw();
 
     if(els.removeWinner.checked){
       removeAt(idx);
-      els.subwinner.textContent += ' (Removed)';
+      els.subwinner.textContent += ' (Auto-removed)';
+    } else {
+      promptRemoveWinner(value, idx);
     }
   }
 
@@ -827,25 +892,20 @@
       openModal('Share link copied', `
         <p>Anyone opening this link will see the same entries.</p>
         <input class="field" value="${url.replaceAll('"','&quot;')}" readonly />
-        <p class="hint">Note: this “share” works by putting your list into the URL. For very large lists it can get too long; a backend fixes that later.</p>
       `);
     }catch(e){
       openModal('Share link', `
         <p>Copy this link:</p>
         <input class="field" value="${url.replaceAll('"','&quot;')}" readonly />
-        <p class="hint">If copy doesn’t work, select the text and copy manually.</p>
       `);
     }
   });
 
-  // Keyboard shortcut: Ctrl+Enter to spin
+  // Ctrl+Enter to spin
   document.addEventListener('keydown', (e) => {
-    if((e.ctrlKey || e.metaKey) && e.key === 'Enter'){
-      spin();
-    }
+    if((e.ctrlKey || e.metaKey) && e.key === 'Enter') spin();
   });
 
-  // Load from URL hash (share links)
   function loadFromHash(){
     const list = decodeFromHash(location.hash);
     if(list && list.length){
@@ -858,7 +918,9 @@
   }
   window.addEventListener('hashchange', loadFromHash);
 
-  // Initial boot: hash > localStorage > default example
+  // Boot order: theme first, then data
+  initTheme();
+
   const fromHash = decodeFromHash(location.hash);
   if(fromHash && fromHash.length){
     setEntries(fromHash);
@@ -867,7 +929,6 @@
   } else if(loadLocal()){
     updateTextareaFromState();
   } else {
-    // default example list
     const example = ['Ali','Beatriz','Charles','Diya','Eric','Fatima','Gabriel','Hanna'];
     els.entries.value = example.join('\n');
     setEntries(example);
