@@ -324,7 +324,7 @@
       <button class="btn small" id="btnTheme" title="Toggle light/dark">Theme</button>
       <button class="btn small" id="btnNew" title="Clear everything">New</button>
       <button class="btn small" id="btnShuffle" title="Shuffle entries">Shuffle</button>
-      <button class="btn small" id="btnSort" title="Sort A→Z">Sort</button>
+      <button class="btn small" id="btnSort" title="Sort A→Z">Sort (A-Z)</button>
       <button class="btn small" id="btnSave" title="Save on this device">Save</button>
       <button class="btn small" id="btnLoad" title="Load from this device">Open</button>
       <button class="btn small primary" id="btnShare" title="Create a share link">Share</button>
@@ -452,7 +452,7 @@
   function setTheme(next){
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem(THEME_KEY, next);
-    btn.theme.textContent = next === 'dark' ? 'Dark' : 'Light';
+    btn.theme.textContent = next === 'dark' ? 'Dark Mode' : 'Light Mode';
   }
   function initTheme(){
     const saved = localStorage.getItem(THEME_KEY);
